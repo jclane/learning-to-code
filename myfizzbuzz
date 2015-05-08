@@ -2,11 +2,8 @@ function fizzbuzz(num) {
 
   for (i = 1; i <= num; i++) {
     var result = "";
-    if (i % 3 == 0) {
+    if (i % 3 == 0 || i % 5 == 0) {
       result += "Fizz";
-    }
-    if (i % 5 == 0) {
-      result += "Buzz";
     }
     console.log(i + " " + result);
   }
