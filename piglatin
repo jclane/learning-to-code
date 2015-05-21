@@ -1,0 +1,14 @@
+function translate(str) {
+  var pigLatin;
+  
+  strArray = str.split(' ');
+  
+  for (i = 0; i < strArray.length; i++) {
+    var strWord = strArray[i].split('');
+
+    strWord = strWord.push(strWord.shift());  
+    strWord.join();
+    str = strArray.join('');
+  }
+  
+}   
