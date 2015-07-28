@@ -1,0 +1,8 @@
+function where(arr, num) {
+  arr.push(arguments[1]);
+  arr.sort();  
+  num = arr.indexOf(arguments[1]);
+  return num;
+}
+
+where([40, 60], 50);
