@@ -1,0 +1,18 @@
+function destroyer(arr) {
+  var newArr = [];
+  
+//  console.log(arr);
+  
+    for (i = 0; i < arr.length; i++) { 
+      console.log('arr = ' + arr[i]);
+      console.log('argument = ' + arguments[1] + ' ' + arguments[2]);
+      if (arr[i] != arguments[1] && arr[i] != arguments[2]) {
+        newArr.push(arr[i]);
+      }
+    }
+
+  console.log(newArr);
+  return newArr;
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3);
