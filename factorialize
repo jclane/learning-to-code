@@ -1,10 +1,10 @@
 function factorialize(num) {
   var total = 1;
-  
   for (i = 2; i <= num;) {
     total = total * i;
     i++;
   }
+  num = total;
   return num;
 }
 
