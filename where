@@ -1,8 +1,11 @@
-function where(arr, num) {
-  arr.push(arguments[1]);
-  arr.sort();  
-  num = arr.indexOf(arguments[1]);
-  return num;
+function getIndexToIns(arr, num) {
+  var index;
+  
+  arr.push(num);
+  arr = arr.sort((a, b) => a - b);
+  index = arr.indexOf(num);
+  
+  return index;
 }
 
-where([40, 60], 50);
+getIndexToIns([2, 5, 10], 15) 
