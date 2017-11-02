@@ -1,8 +1,8 @@
 function palindrome(str) {
   str = (str.toLowerCase().replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,'').replace(/\s+/g,''));
   var strArray = str.split("").reverse().join("").split(" ").reverse();
-  
-  if (str == strArray.toString()) {
+
+if (str == strArray.toString()) {
     return true;
   } else {
     return false;
