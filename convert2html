@@ -1,30 +1,16 @@
-
 function convertHTML(str) {
-  // &colon;&rpar;
-  const regexp = /[&<>"']/;
-  
-  for (i = 0; i < str.length; i++) {
-    var currentChar = str.charCodeAt(i);
-    var char = String.fromCharCode(currentChar);
-    console.log(char, currentChar);
-    switch (regexp.test(currentChar) === true) {
-      case "38" :
-        str(i).replace("&amp;");
-        break;
-      case 60:
-        str(i).replace("&lt;");
-        break;
-      case 62: 
-        str(i).replace("&gt;");
-        break;
-      case 34:
-        str(i).replace("&quot;");
-        break;
-      case 4:
-        currentChar = "'";
-        break;
-    }
-  }
+
+  const amp = /[&]/g;
+  const less = /[<]/g;
+  const greater = /[>]/g;
+  const doubleQ = /["]/g;
+  const apos = /[']/g;
+
+  str = str.replace(amp, "&amp;");
+  str = str.replace(less, "&lt;");
+  str = str.replace(greater, "&gt;");
+  str = str.replace(doubleQ, "&quot;");
+  str = str.replace(apos, "&apos;");
   
   return str;
 }
