@@ -14,46 +14,27 @@ property and its value, that was passed on as the second argument.
 
 function whatIsInAName(collection, source) {
   let arr = [];
-  const sorEnt = Object.entries(source);
   const sorKeys = Object.keys(source);
-  let match = false;
   
-  for (var elC in collection) {
-    var currColEnt = Object.entries(collection[elC]);
-    var currColVal = Object.values(collection[elC]);
-    
-    for (var i = 0; i < sorKeys.length; i++) {
-      if (collection[elC].hasOwnProperty(sorKeys[i])) {
-        switch (currColEnt[i][1]) {
-          default:
-              if (currColEnt[i][1] == sorEnt[i][1]) {
-                match = true;
-              } else {
-                match = false;
-              }
-              break;
-          case undefined:
-              if (currColEnt[1][1] == sorEnt[i][1]) {
-                match = true;
-              } else {
-                match = false;
-              }
-              break;
-        }
+  arr = collection.filter(function (obj) {
+    for(var i = 0; i < sorKeys.length; i++) {
+      if(!obj.hasOwnProperty(sorKeys[i]) || obj[sorKeys[i]] !== source[sorKeys[i]]) {
+        return false;
       }
     }
- 
-    if (match === true) {
-      arr.push(collection[elC]);
-    }
-  }
+    return true;
+  });
+  
   return arr;
 }
 
 
-// This one has two sources to be returned instead of one
+
+console.log(whatIsInAName([{ "a": 1, "b": 2 }, { "a": 1 }, { "a": 1, "b": 2, "c": 2 }], { "a": 1, "c": 2 }));
+// Should return [{ "a": 1, "b": 2, "c": 2 }]
+
 console.log(whatIsInAName([{ "a": 1, "b": 2 }, { "a": 1 }, { "a": 1, "b": 2, "c": 2 }], { "a": 1, "b": 2 }));
 // Should return [{ "a": 1, "b": 2 }, { "a": 1, "b": 2, "c": 2 }]
 
 console.log(whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" }));
-// Should return [{ first: 'Tybalt', last: 'Capulet' } ]
+// Should return [{ first: 'Tybalt', last: 'Capulet' }]
