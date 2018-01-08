@@ -60,14 +60,14 @@ function updateRecords(id, prop, value) {
   if (prop != "tracks" && value != "") {
     collection[id][prop] = value;
   } else if (prop != "tracks" && value == "") {
-    collection[id][prop] = value;
-  } else if (!collection[id].hasOwnProperty[prop] && prop == "tracks" && value != "") {
+    delete collection[id][prop];
+  } else if (!collection[id].hasOwnProperty(prop) && prop == "tracks" && value != "") {
     collection[id].tracks = [];
     collection[id][prop].push(value);
-  } else if (collection[id].hasOwnProperty["tracks"] && prop == "tracks" && value != "") {
+  } else if (collection[id].hasOwnProperty(prop) && prop == "tracks" && value != "") {
     collection[id][prop].push(value);
   } else if (prop == "tracks" && value == "") {
-    collection[id].tracks = [];
+    delete collection[id].tracks;
   }
   
   return collection;
@@ -80,11 +80,14 @@ function updateRecords(id, prop, value) {
 //console.log("Adding track 'Take a Chance on Me' to ABBA");
 //console.log(updateRecords(5439, "tracks", "Take a Chance on Me"));
 
-console.log("Setting 2548 to empty from Bon Jovi");
-console.log(updateRecords(2548, "artist", ""));
+//console.log("Setting 2548 to empty from Bon Jovi");
+//console.log(updateRecords(2548, "artist", ""));
 
 //console.log("Adding 'Addicted to Love' to 1245");
 //console.log(updateRecords(1245, "tracks", "Addicted to Love"));
 
 //console.log("Setting 2548 tracks to empty");
 //console.log(updateRecords(2548, "tracks", ""));
+
+console.log("Adding Free to 2468 tracks");
+console.log(updateRecords(2468, "tracks", "Free"));
