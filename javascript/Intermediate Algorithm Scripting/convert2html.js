@@ -1,3 +1,8 @@
+/*
+Convert the characters &, <, >, " (double quote), and ' (apostrophe), in a 
+string to their corresponding HTML entities.
+*/
+
 function convertHTML(str) {
 
   const amp = /[&]/g;
@@ -15,4 +20,4 @@ function convertHTML(str) {
   return str;
 }
 
-convertHTML("Dolce & Gabbana");
+console.log(convertHTML("Dolce & Gabbana"));
