@@ -13,21 +13,33 @@ both (C △ D = {1, 4} △ {2, 3} = {1, 2, 3, 4}).
 
 function sym(args) {
   args = Array.prototype.slice.call(arguments);
-  
+
   let result = [];
   
-  function getUniq(arr1, arr2) {
-    for (var i = 0; i < arr1.length; i++) {
-      if (arr2.includes(arr1[i]) === false) {
-        result.push(arr1[i]);
-      }
+  // Reduces 'args' to an 1 deminsional array and counts how many times a 
+  // value appears in the new array
+  let reduce = args.reduce((a, b) => a.concat(b))
+                .reduce(function (allValues, value) {
+                  if (value in allValues) {
+                    allValues[value]++;
+                  } else {
+                    allValues[value] = 1;
+                  }
+                  return allValues;
+                }, {});
+                
+  for (var key in reduce) { 
+    if (reduce[key] === 1) {
+      result.push(parseInt(key));
     }
   }
-  
-  getUniq(args[0], args[1]);
-  getUniq(args[1], args[0]);
-
+                
+                
   return result;
 }
 
 console.log(sym([1, 2, 3], [5, 2, 1, 4]));
+console.log("Should be [3, 4, 5]");
+
+console.log(sym([1, 2, 5], [2, 3, 5], [3, 4, 5]));
+console.log("Should be [1, 4, 5]");
