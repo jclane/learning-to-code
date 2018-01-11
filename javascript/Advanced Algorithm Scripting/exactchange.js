@@ -35,6 +35,7 @@ covered the whole change.
 function checkCashRegister(price, cash, cid) {
   let change = [];
   let changeDue = cash - price;
+  let status = "open";
   changeDue = Number(changeDue.toFixed(2));
   let monies = [];
   
@@ -63,15 +64,64 @@ function checkCashRegister(price, cash, cid) {
  
  // Subtract the coins/dollars from the "drawer" and the value from 'changeDue'
  function subCid(item, value) {
-   monies[item] = monies[item] - 1;
-   changeDue = changeDue - value;
-   changeDue = Number(changeDue.toFixed(2));
-   change.push([item, value]);
+   if (monies[item] >= 1) {
+    monies[item] = monies[item] - 1;
+    changeDue = changeDue - value;
+    changeDue = Number(changeDue.toFixed(2));
+    change.push([item, value]);
+   } else {
+     switch (item) {
+        case 8: 
+          subCid(7,20);
+          break;
+        case 7:
+          subCid(6,10);
+          break;
+        case 6:
+          subCid(5,5);
+          break;
+        case 5:
+          subCid(4,1);
+          break;
+        case 4:
+          subCid(3,0.25);
+          break;
+        case 3:
+          subCid(2,0.10);
+          break;
+        case 2:
+          subCid(1,0.01);
+          break;
+        case 1:
+          console.log("Insufficient Funds");
+          break;
+        case 0:
+          status = "closed";
+          break;
+     }
+   }
  }
  
   while (changeDue > 0) {
-    if (changeDue >= 0.50) {
-      subCid(3, 0.50);
+    if (status == "closed") {
+      console.log("closed");
+      break;
+    } else if (changeDue >= 100) {
+      subCid(8, 100);
+    } else if (changeDue >= 20) {
+      subCid(7, 20);
+    } else if (changeDue >= 10) {
+      subCid(6, 10);
+    } else if (changeDue >= 5) {
+      subCid(5, 5);
+    } else if (changeDue >= 1) {
+      subCid(4, 1); 
+    } else if (changeDue >= 0.25) {
+      subCid(3, 0.25);
+    } else if (changeDue >= 0.10) {
+      subCid(2, 0.10);
+    } else if (changeDue >= 0.05) {
+      subCid(1, 0.05);
     } else if (changeDue >= 0.01) {
       subCid(0, 0.01);
     }
@@ -80,7 +130,6 @@ function checkCashRegister(price, cash, cid) {
   for (var el in change) {
     
   }
-  
   
   for (var i = 0; i < change.length; i++) {
     switch (change[i][0]) {
@@ -107,4 +156,4 @@ function checkCashRegister(price, cash, cid) {
 // ["TWENTY", 60.00],
 // ["ONE HUNDRED", 100.00]]
 
-console.log(checkCashRegister(19.50, 20.02, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
+console.log(checkCashRegister(19.50, 20.02, [["PENNY", 0], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
