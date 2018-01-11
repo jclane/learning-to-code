@@ -38,6 +38,7 @@ function checkCashRegister(price, cash, cid) {
   let status = "open";
   changeDue = Number(changeDue.toFixed(2));
   let monies = [];
+  let totalCid;
   
   const values = new Object();
     values.PENNY = 0.01;
@@ -49,7 +50,6 @@ function checkCashRegister(price, cash, cid) {
     values.TEN = 10.00;
     values.TWENTY = 20.00;
     values.HUNDRED = 100.00;
-    
   
   // Push the values in 'cid' into the array 'monies'
   for (var i = 0; i < cid.length; i++) {
@@ -61,9 +61,9 @@ function checkCashRegister(price, cash, cid) {
     var valArr = Object.values(values);
     monies[i] = Math.round(monies[i] / valArr[i]);
   }
- 
- // Subtract the coins/dollars from the "drawer" and the value from 'changeDue'
- function subCid(item, value) {
+  
+  // Subtract the coins/dollars from the "drawer" and the value from 'changeDue'
+  function subCid(item, value) {
    if (monies[item] >= 1) {
     monies[item] = monies[item] - 1;
     changeDue = changeDue - value;
@@ -90,59 +90,106 @@ function checkCashRegister(price, cash, cid) {
           subCid(2,0.10);
           break;
         case 2:
-          subCid(1,0.01);
+          subCid(1,0.05);
           break;
         case 1:
-          console.log("Insufficient Funds");
+          subCid(0,0.01);
           break;
         case 0:
-          status = "closed";
+          status = "Insufficient Funds";
+          break;
+        default:
+          status = "Insufficient Funds";
           break;
      }
    }
  }
- 
-  while (changeDue > 0) {
-    if (status == "closed") {
-      console.log("closed");
-      break;
-    } else if (changeDue >= 100) {
-      subCid(8, 100);
-    } else if (changeDue >= 20) {
-      subCid(7, 20);
-    } else if (changeDue >= 10) {
-      subCid(6, 10);
-    } else if (changeDue >= 5) {
-      subCid(5, 5);
-    } else if (changeDue >= 1) {
-      subCid(4, 1); 
-    } else if (changeDue >= 0.25) {
-      subCid(3, 0.25);
-    } else if (changeDue >= 0.10) {
-      subCid(2, 0.10);
-    } else if (changeDue >= 0.05) {
-      subCid(1, 0.05);
-    } else if (changeDue >= 0.01) {
-      subCid(0, 0.01);
-    }
-  }
   
-  for (var el in change) {
+  // While register is open and change is due...
+  while (status == "open" && changeDue > 0) {
+      if (changeDue >= 100) {
+        subCid(8, 100);
+      } else if (changeDue >= 20) {
+        subCid(7, 20);
+      } else if (changeDue >= 10) {
+        subCid(6, 10);
+      } else if (changeDue >= 5) {
+        subCid(5, 5);
+      } else if (changeDue >= 1) {
+        subCid(4, 1); 
+      } else if (changeDue >= 0.25) {
+        subCid(3, 0.25);
+      } else if (changeDue >= 0.10) {
+        subCid(2, 0.10);
+      } else if (changeDue >= 0.05) {
+        subCid(1, 0.05);
+      } else if (changeDue >= 0.01) {
+        subCid(0, 0.01);
+      }
+    }
+
+  // If register still open there must be change to give...
+  if (status == "open") {
+    let result = new Object();
+      result.PENNY = 0;
+      result.NICKEL = 0;
+      result.DIME = 0;
+      result.QUARTER = 0;
+      result.ONE = 0;
+      result.FIVE = 0;
+      result.TEN = 0;
+      result.TWENTY = 0;
+      result.HUNDRED = 0;      
     
-  }
+    for (var i = 0; i < change.length; i++) {
+      switch (change[i][0]) {
+        case 0: 
+          result.PENNY = result.PENNY + change[i][1];
+          break;
+        case 1:
+          result.NICKEL = result.NICKEL + change[i][1];
+          break;
+        case 2: 
+          result.DIME = result.DIME + change[i][1];
+          break;
+        case 3: 
+          result.QUARTER = result.QUARTER + change[i][1];
+          break;
+        case 4: 
+          result.ONE = result.ONE + change[i][1];
+          break;  
+        case 5: 
+          result.FIVE = result.FIVE + change[i][1];
+          break;
+        case 6: 
+          result.TEN = result.TEN + change[i][1];
+          break;
+        case 7: 
+          result.TWENTY = result.TWENTY + change[i][1];
+          break;
+        case 8: 
+          result.HUNDRED = result.HUNDRED + change[i][1];
+          break;
+      }
+    }
+    
+    change = Object.entries(result);
+    
+    for (var i = 8; i >= 0; i--) {
+      if (change[i][1] == 0) {
+        change.splice(i,1);
+      }
+    }
   
-  for (var i = 0; i < change.length; i++) {
-    switch (change[i][0]) {
-      case 0: 
-        change[i][0] = "PENNY";
-        break;
-      case 3: 
-        change[i][0] = "QUARTER";
-        break;
+    if (monies.reduce((a,b) => a + b) != 0) {
+      return change.reverse();
+    } else if (monies.reduce((a,b) => a + b) == 0) {
+      return "Closed";
+    } else {
+      return status;
     }
   }
-  
-  return change;
+  return status;
 }
 
 // Example cash-in-drawer array:
@@ -156,4 +203,18 @@ function checkCashRegister(price, cash, cid) {
 // ["TWENTY", 60.00],
 // ["ONE HUNDRED", 100.00]]
 
-console.log(checkCashRegister(19.50, 20.02, [["PENNY", 0], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
+//console.log(checkCashRegister(19.50, 20.02, [["PENNY", 1.05], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
+//console.log("Should return an array");
+
+//console.log(checkCashRegister(19.50, 20.00, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]));
+//console.log("Should return a string");
+
+//console.log(checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
+// looking for ['QUARTER', 0.50] here
+
+//console.log(checkCashRegister(19.50, 20.00, [["PENNY", 0.50], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]));
+// should return "Closed".
+
+console.log(checkCashRegister(3.26, 100.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]));
+// should return [["TWENTY", 60.00], ["TEN", 20.00], ["FIVE", 15.00], ["ONE", 1.00], ["QUARTER", 0.50], ["DIME", 0.20], ["PENNY", 0.04]]
+// this one is about the order they're returned in
