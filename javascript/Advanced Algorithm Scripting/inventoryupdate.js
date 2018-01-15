@@ -7,7 +7,6 @@ in alphabetical order by item.
 */
 
 function updateInventory(arr1, arr2) {
-  var found = true;
 
   function getSorted(a, b) {
     if (a[1] === b[1]) {
@@ -20,20 +19,15 @@ function updateInventory(arr1, arr2) {
   if (arr1.length > 0) {
     arr1.sort(getSorted);
     arr2.sort(getSorted);
-    for(var i = 0; i < arr2.length; i += 1) {
-      if(arr2[i].indexOf(arr1[i][1]) > -1){
-        if(arr2[i][0] === 0) {
-          arr1[i][0] = 0;
-        } else if (arr2[i][0] > 1) {
-          arr1[i][0] = arr1[i][0] - arr2[i][0];
-        } else {
-          arr1[i][0] = arr1[i][0] + arr2[i][0];
+    for (var arr in arr2) {
+      for (var i = 0; i < arr1.length; i++) {
+        if (arr1[i].indexOf(arr2[arr][1]) > -1) {
+          arr1[i][0] += arr2[arr][0];
+          break;
+        } else if (i == arr2.length - 1) {
+          arr1.push(arr2[arr]); 
+          break;
         }
-      } else {
-        found = false
-      }
-      if (found === false) {
-        arr1.push(arr2[i]);
       }
     }
   } else {
@@ -72,6 +66,8 @@ var newInv = [
   [7, "Toothpaste"]]
 */
 //console.log(updateInventory([[21, "Bowling Ball"], [2, "Dirty Sock"], [1, "Hair Pin"], [5, "Microphone"]], [[2, "Hair Pin"], [3, "Half-Eaten Apple"], [67, "Bowling Ball"], [7, "Toothpaste"]]));
+// WORKING
+
 
 /* This should return
 [[67, "Bowling Ball"], 
@@ -80,6 +76,7 @@ var newInv = [
   [7, "Toothpaste"]]
 */
 //console.log(updateInventory([], [[2, "Hair Pin"], [3, "Half-Eaten Apple"], [67, "Bowling Ball"], [7, "Toothpaste"]]));
+// WORKING
 
 /* This should return
 [[1, "Bowling Ball"],
@@ -90,3 +87,4 @@ var newInv = [
   [1, "Toothpaste"]]
 */
 console.log(updateInventory([[0, "Bowling Ball"], [0, "Dirty Sock"], [0, "Hair Pin"], [0, "Microphone"]], [[1, "Hair Pin"], [1, "Half-Eaten Apple"], [1, "Bowling Ball"], [1, "Toothpaste"]]));
+// WORKING
