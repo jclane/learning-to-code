@@ -20,27 +20,44 @@ Below we'll take their corresponding indices and add them.
 */
 
 function pairwise(arr, arg) {
-  let i = 0;
-  let j = arr.length - 1;
-  let pairs = [];
-
-  while (i < j && i < arr.length && j >= 0) {
-    var a = arr[i], b = arr[j];
-    if (a + b == arg) {
-      pairs.push([arr.indexOf(arr[i]), arr.indexOf(arr[j])]);
-      while (i < arr.length && arr[i] == a) { i++; }
-      while (j >= 0 && arr[j] == b) { j--; }
-    } else if (a + b < arg) {
-      while (i < arr.length && arr[i++] == a);
-    } else {
-      while (j >= 0 && arr[j--] == b);
+  let pairs;
+  pairs = (arr.length > 0 ? pairs = [] : pairs = [0]);
+  
+  for (var el in arr) {
+    var a = arr[el];
+    for (var i = 0; i < arr.length; i++) {
+      var b = arr[i];
+      if (pairs.indexOf(+el) === -1 && pairs.indexOf(i) === -1 && +el > i && a + b == arg) {
+        pairs.push(+el,i);
+        break;
+      }
     }
   }
-    
-  return pairs;
   
-  //return arg;
+  return pairs.reduce((a,b) => a+b);  
+
 }
 
 // Should return 11.
-pairwise([1,4,2,3,0,5], 7);
+//console.log(pairwise([1,4,2,3,0,5], 7));
+// WORKS
+
+// Should return 1.
+//console.log(pairwise([1, 1, 1], 2));
+// WORKS
+
+// Should return 6.
+//console.log(pairwise([7, 9, 11, 13, 15], 20));
+// WORKS
+
+// Should return 1.
+//console.log(pairwise([1, 3, 2, 4], 4));
+// WORKS
+
+// Should return 10.
+console.log(pairwise([0, 0, 0, 0, 1, 1], 1));
+// WORKS
+
+// Should return 0
+console.log(pairwise([], 100));
+// WORKS
