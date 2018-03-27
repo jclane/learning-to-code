@@ -81,13 +81,14 @@ for subdir, dirs, files in os.walk(rootdir):
 if len(found) > 0:
     print('Text found in the following ' + str(len(found)) + ' files.\n')
     ask = input('Save to desktop? (y/n) >> ')
-    for el in found:
-        print(el)
-        if ask.lower() == 'y' or ask.lower() == 'yes':
-            desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-            with open(desktop + "search results.csv", "w") as flist:
-                flist.write(os.path.basename(f.name) + ',' + ','.join(classCount) + ',' + ',' + str(creationDate) + ',\n')
-        else:
+    if ask.lower() == 'y' or ask.lower() == 'yes':
+        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+        with open(desktop + "search results.csv", "w") as flist:
+            for el in found:
+                flist.write(el + ',\n')
+                print(el)
+    else:
+        for el in found:
             print(el)
 else:
     print('Text not found.')
