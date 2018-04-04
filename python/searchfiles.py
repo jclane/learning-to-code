@@ -102,7 +102,7 @@ def find_it(searchTerm):
                 continue
     show_results()
                 
-
+      
 select_brand()
 searchTerm = input('Please enter text to search for >> ')
 find_it(searchTerm)
