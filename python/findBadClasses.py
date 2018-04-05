@@ -1,12 +1,10 @@
-from time import sleep
-import os
-import sys
+import os, sys
 
 """
 This loops through the various brand folders and the *.CSV files they contain.  In the files it will search for unknown/incorrect
 part classes and save the model number to a text file.
 """
-rootdir = 'S:\\BOM Squad\\BOM-Smart Parts\\'
+rootdir = r'\\VSP021320\GSC-Pub\BOM Squad\BOM-Smart Parts'
 
 for subdir, dirs, files in os.walk(rootdir):
     print('Starting on ' + subdir)
@@ -14,17 +12,7 @@ for subdir, dirs, files in os.walk(rootdir):
     'CARD', 'CD', 'CMOS', 'CORD', 'COS', 'CRBD', 'DCBD', 'DCJK', 'DOCKIT', 'DVD', 'FAN', 'FDD', 
     'FLD', 'GK', 'HDD', 'HEAT SYNC', 'INV', 'IOB', 'IOP', 'KB', 'LAN', 'LCD', 'LDBD', 'LK', 'MEM', 
     'MIC', 'MOD', 'OBRD', 'OTHER', 'PEN', 'PROC', 'PWBD', 'PWR', 'REM', 'SCRD', 'TABMB', 'TUBRD', 
-    'USBD', 'VBRD', 'VGBD', 'WIR'] 
-    
-    """
-    n = len(dirs)
-    for i in range(n):
-        sys.stdout.write('\r')
-        # the exact output you're looking for:
-        sys.stdout.write("[{:{}}] {:.1f}%".format("=" * i, n - 1, (100 / (n - 1) * i)))
-        sys.stdout.flush()
-        sleep(0.25)
-    """               
+    'USBD', 'VBRD', 'VGBD', 'WIR']       
                    
     for file in files:
     
@@ -41,14 +29,14 @@ for subdir, dirs, files in os.walk(rootdir):
                         listPath = os.path.join(mydir, "BadClass.csv")
                         for line in f:
                             splitLine = line.split(",", 1)
-                            if splitLine[0] not in classesList:
+                            if splitLine[0] not in classesList and ',,' not in line and ',,,' not in line and '\n' not in line:
                                 if not os.path.exists(listPath):
                                     with open(listPath,"w") as flist:
                                         flist.write("Model,Classs,\n")
-                                        flist.write(os.path.basename(f.name) + ',' + splitLine[0] + ',\n')
+                                        flist.write(os.path.basename(f.name) + ',' + splitLine[0])
                                 else:
                                     with open(listPath,"a") as flist:
-                                        flist.write(os.path.basename(f.name) + ',' + splitLine[0] + ',\n')
+                                        flist.write(os.path.basename(f.name) + ',' + splitLine[0])
                     except Exception as e:
                         errorPath = os.path.join(mydir, "errors.csv")
                         print("Error: " + str(e))
