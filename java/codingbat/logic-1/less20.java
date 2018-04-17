@@ -8,9 +8,5 @@ less20(20) → false
 */
 
 public boolean less20(int n) {
-  if (20 % n == 1 || 20 % n == 2 || n % 20 == 18 || n % 20 == 19) {
-    return true;
-  } else {
-    return false;
-  }
+  return (20 % n == 1 || 20 % n == 2 || n % 20 == 18 || n % 20 == 19);
 }
