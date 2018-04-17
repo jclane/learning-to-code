@@ -11,6 +11,10 @@ noTeenSum(2, 13, 1) → 3
 noTeenSum(2, 1, 14) → 3
 */
 
+public int noTeenSum(int a, int b, int c) {
+    return fixTeen(a) + fixTeen(b) + fixTeen(c);
+}
+
 public int fixTeen(int n) {
   if (13 <= n && n <= 19) {
     if (n == 15) {
@@ -23,8 +27,4 @@ public int fixTeen(int n) {
   } else {
     return n;
   }
-}
-
-public int noTeenSum(int a, int b, int c) {
-    return fixTeen(a) + fixTeen(b) + fixTeen(c);
 }
