@@ -7,8 +7,5 @@ twoAsOne(3, 2, 2) → false
 */
 
 public boolean twoAsOne(int a, int b, int c) {
-  if (a + b == c || c + b == a || a + c == b) {
-    return true;
-  }
-  return false;
+  return (a + b == c || c + b == a || a + c == b);
 }
