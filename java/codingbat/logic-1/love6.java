@@ -8,8 +8,5 @@ love6(1, 5) → true
 */
 
 public boolean love6(int a, int b) {
-  if (a == 6 || b == 6 || a+b == 6 || Math.abs(a-b) == Math.abs(6)) {
-    return true;
-  }
-  return false;
+  return (a == 6 || b == 6 || a+b == 6 || Math.abs(a-b) == Math.abs(6));
 }
