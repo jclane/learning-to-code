@@ -6,7 +6,7 @@
  * sum28([1, 2, 3, 4]) → false
  */
  
- public boolean sum28(int[] nums) {
+public boolean sum28(int[] nums) {
   int sum = 0;
   for (int n : nums) if (n == 2) sum += n;
   return sum == 8;
