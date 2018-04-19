@@ -9,7 +9,7 @@
  * fizzArray(10) → [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
  
- public int[] fizzArray(int n) {
+public int[] fizzArray(int n) {
   int[] arr = new int[n];
   for (int i = 1; i < n; i++) {
     arr[i] = i;
