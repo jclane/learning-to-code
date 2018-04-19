@@ -6,7 +6,7 @@
  * more14([1, 1]) → true
  */
  
- public boolean more14(int[] nums) {
+public boolean more14(int[] nums) {
   int count1 = 0;
   int count4 = 0;
   
