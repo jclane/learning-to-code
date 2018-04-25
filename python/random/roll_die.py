@@ -41,13 +41,13 @@ class tkWindow:
         mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 
         ## Subframe for controls
-        controlframe = tk.Frame(mainframe, bg='lavender', width=450, height=60)
+        controlframe = ttk.Frame(mainframe, width=450, height=60)
         controlframe.grid(column=1, row=1, sticky=N+W+E+S)
         controlframe.columnconfigure(0, weight=2)
         controlframe.rowconfigure(0, weight=2)
 
         ## Subframe for results
-        resultframe = tk.Frame(mainframe, bg='cyan', width=450, height=50)
+        resultframe = ttk.Frame(mainframe, width=450, height=50)
         resultframe.grid(column=3, row=1, sticky=N+W+E+S)
         resultframe.columnconfigure(0, weight=1)
         resultframe.rowconfigure(1, weight=1)
