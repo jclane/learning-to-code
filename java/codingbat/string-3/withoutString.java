@@ -9,7 +9,7 @@
  * withoutString("Hello there", "x") → "Hello there"
  */
  
- public String withoutString(String base, String remove) {
+public String withoutString(String base, String remove) {
   int remLen = remove.length();
   int baseLen = base.length();
   String result = "";
