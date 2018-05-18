@@ -8,13 +8,15 @@ class Task(object):
 
 def show_help():
     print("""
-    Type 'QUIT' to exit the program.
-    Type 'HELP' to display this message.
+    Type '!QUIT' to exit the program.
+    Type '!SHOW' to show current tasks.
+    Type '!COMPLETE' and the number of a task to change it's status to complete.
+    Type '!HELP' to display this message.
     """)
 
 def add_to_tasks(task):
     tasks_list.append(Task(len(tasks_list)+1,task))
-    print('ADDED!\n')
+    print('Task number {} has been added!\n'.format(len(tasks_list)))
 
 def show_tasks():
     col_width = (max(len(task.description) for task in tasks_list))
@@ -23,22 +25,26 @@ def show_tasks():
         print("{}. {} | STATUS: {}".format(task.number,task.description.ljust(col_width),task.status))
     print('\nDONE!\n')
 
-def complete_task(task):
-    # Change status of a task to 'COMPLETE'
-    print("TODO")
-    
-
+def complete_task(number):
+    for task in tasks_list:
+        if task.number == number:
+            task.status = 'COMPLETE'
+            print("Task '{}' has been completed".format(task.description))
 while True:
     
     response = input("> ")
     
-    if response == 'QUIT':
+    if response == '!QUIT':
         break
-    elif response == 'HELP':
+    elif response == '!HELP':
         show_help()
         continue
-    elif response == 'SHOW':
+    elif response == '!SHOW':
         show_tasks()
+        continue
+    elif '!COMPLETE' in response:
+        task = response.split(' ')
+        complete_task(int(task[1]))
         continue
     else:
         add_to_tasks(response)
