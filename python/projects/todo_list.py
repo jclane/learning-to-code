@@ -2,6 +2,7 @@ tasks_list = []
 
 class Task(object):
     """Creates a task object."""
+    
     def __init__(self, number=0, description="", status="incomplete"):
         self.number = number
         self.description = description
